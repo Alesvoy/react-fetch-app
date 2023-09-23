@@ -64,13 +64,13 @@ const DogSearch: React.FC = () => {
           duration: 5000,
           position: "top-center",
         });
-        navigate("/login");
+        navigate("/");
       } else {
         toast.error("Oops something went wrong, please log in again!", {
           duration: 5000,
           position: "top-center",
         });
-        navigate("/login");
+        navigate("/");
       }
     },
   });
@@ -139,7 +139,7 @@ const DogSearch: React.FC = () => {
                   withCredentials: true,
                 }
               );
-              navigate("/login");
+              navigate("/");
               toast.success("Log out successful!", {
                 duration: 2000,
                 position: "top-center",

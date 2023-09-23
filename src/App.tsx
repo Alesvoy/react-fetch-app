@@ -7,12 +7,12 @@ import { Toaster } from "react-hot-toast";
 
 const router = createBrowserRouter([
   {
-    path: "/dogs",
-    element: <DogSearch />,
+    path: "/",
+    element: <Login />,
   },
   {
-    path: "/login",
-    element: <Login />,
+    path: "/dogs",
+    element: <DogSearch />,
   },
 ]);
 
