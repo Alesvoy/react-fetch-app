@@ -28,6 +28,7 @@ const DogCard: React.FC<Props> = ({ dogData }) => {
       />
       <h3>{dogData.name}</h3>
       <p>Age: {dogData.age}</p>
+      <p>Zip Code: {dogData.zip_code}</p>
       {favorites.includes(dogData) ? (
         <button className="btn" onClick={handleRemoveFormFavorites}>
           Remove from favorites
