@@ -13,7 +13,7 @@ foo@bar:~$ npm install
 and
 
 ```console
-foo@bar:~$ npm dev
+foo@bar:~$ npm run dev
 ```
 
 ## See a preview
