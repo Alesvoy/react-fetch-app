@@ -7,7 +7,7 @@ import "./DogMatch.css";
 import toast from "react-hot-toast";
 
 const DogMatch: React.FC = () => {
-  const { favorites } = useContext(FavoritesContext);
+  const { favorites, setFavorites } = useContext(FavoritesContext);
 
   const navigate = useNavigate();
 
@@ -40,6 +40,7 @@ const DogMatch: React.FC = () => {
       <button
         className="btn"
         onClick={() => {
+          setFavorites([]);
           navigate("/dogs");
         }}
       >

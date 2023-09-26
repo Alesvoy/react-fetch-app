@@ -34,7 +34,7 @@ export const getMatch = async (favorites: string[]) => {
     withCredentials: true,
   });
 
-  return axios.post(`${POST_DOGS}`, [dogId.data.match], {
+  return axios.post(POST_DOGS, [dogId.data.match], {
     withCredentials: true,
   });
 };

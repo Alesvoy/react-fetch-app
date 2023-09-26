@@ -13,7 +13,7 @@ import "./DogSearch.css";
 import "../Utils.css";
 
 const DogSearch: React.FC = () => {
-  const { favorites, setFavorites } = useContext(FavoritesContext);
+  const { favorites } = useContext(FavoritesContext);
 
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -106,7 +106,6 @@ const DogSearch: React.FC = () => {
             className="btn matchMeButton"
             onClick={() => {
               navigate("/match");
-              setFavorites([]);
             }}
           >
             Match me to a dog!
