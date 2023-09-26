@@ -1,0 +1,19 @@
+.btn {
+  padding: 10px;
+  background-color: black;
+  border-radius: 10px;
+  color: white;
+  border: none;
+  transition: transform 1s;
+}
+
+.btn:hover {
+  transform: translateY(-4px);
+  cursor: pointer;
+}
+
+.btn:disabled {
+  cursor: default;
+  transform: none;
+  background-color: gray;
+}

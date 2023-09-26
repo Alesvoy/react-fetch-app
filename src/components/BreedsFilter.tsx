@@ -1,15 +1,12 @@
-import axios from "axios";
-import { DOG_BREEDS } from "../utils/urls";
 import { useQuery } from "react-query";
 import { useState } from "react";
+import { getBreeds } from "../api/dogs";
+
+import "./BreedsFilter.css";
 
 type Props = {
   filteredBreeds: string[];
   setFilteredBreeds: React.Dispatch<React.SetStateAction<string[]>>;
-};
-
-const getBreeds = async () => {
-  return axios.get(DOG_BREEDS, { withCredentials: true });
 };
 
 const BreedsFilter: React.FC<Props> = ({
@@ -32,38 +29,42 @@ const BreedsFilter: React.FC<Props> = ({
       ) : (
         <div>
           <button
+            className="btn"
             onClick={() => {
               setShowBreeds((prevState: boolean) => !prevState);
             }}
           >{`${showBreeds ? "Hide" : "Show"} Breeds`}</button>
           <div style={{ display: showBreeds ? "block" : "none" }}>
-            {breeds.map((item: string) => (
-              <div
-                key={item}
-                style={{ display: "inline-block", margin: "5px" }}
-              >
-                <input
-                  type="checkbox"
-                  id={item}
-                  name={item}
-                  checked={filteredBreeds.includes(item)}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                    if (e.target.checked) {
-                      setFilteredBreeds((breeds: string[]) => [
-                        ...breeds,
-                        item,
-                      ]);
-                    } else {
-                      const newArr = filteredBreeds.filter(
-                        (item: string) => item !== e.target.name
-                      );
-                      setFilteredBreeds(newArr);
-                    }
-                  }}
-                />
-                <label htmlFor={item}>{item}</label>
-              </div>
-            ))}
+            <p>Filter by breed:</p>
+            <div className="breedsList">
+              {breeds.map((item: string) => (
+                <div
+                  key={item}
+                  style={{ display: "inline-block", margin: "5px" }}
+                >
+                  <input
+                    type="checkbox"
+                    id={item}
+                    name={item}
+                    checked={filteredBreeds.includes(item)}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                      if (e.target.checked) {
+                        setFilteredBreeds((breeds: string[]) => [
+                          ...breeds,
+                          item,
+                        ]);
+                      } else {
+                        const newArr = filteredBreeds.filter(
+                          (item: string) => item !== e.target.name
+                        );
+                        setFilteredBreeds(newArr);
+                      }
+                    }}
+                  />
+                  <label htmlFor={item}>{item}</label>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       )}

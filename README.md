@@ -1,27 +1,25 @@
-# React + TypeScript + Vite
+# Alejandro Butron Front End challenge for Fetch
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+For this challenge I decided to use React + TypeScript. I wanted to keep the level bleeding edge technologies low in order to showcase my abilities and use small libraries that are often used in modern React applications.
 
-Currently, two official plugins are available:
+## What you need to run this app locally
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+If you want to run this app locally, make sure you are running Node version 16+, once you have the source code on your machine run the following 2 commands:
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
+```console
+foo@bar:~$ npm install
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+and
+
+```console
+foo@bar:~$ npm start
+```
+
+## See a preview
+
+A preview of this app can be viewed at https://react-fetch-app.vercel.app/
+
+## Final comments
+
+Make sure you open this app on Chrome but on the Desktop version, since this app does not run on mobile web browsers or other browsers that are not directly Chrome on desktop.

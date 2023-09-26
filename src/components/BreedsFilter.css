@@ -1,0 +1,10 @@
+.breedSelector {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.breedsList {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}

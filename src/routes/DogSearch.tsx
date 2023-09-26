@@ -1,45 +1,20 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import axios, { AxiosError } from "axios";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { DOG_SEARCH, LOGOUT_URL, POST_DOGS } from "../utils/urls";
+import { LOGOUT_URL } from "../utils/urls";
 import { useQuery } from "react-query";
 import BreedsFilter from "../components/BreedsFilter";
 import { toast } from "react-hot-toast";
-
-interface IDog {
-  id: string;
-  img: string;
-  name: string;
-  age: number;
-  zip_code: string;
-  breed: string;
-}
-
-const getDogs = async (page: number, breeds: string[], sort: string) => {
-  const newBreedsString = breeds
-    .map((item: string) => `breeds=${item}`)
-    .join("&");
-
-  try {
-    const dogIds = await axios.get(
-      breeds.length > 0
-        ? `${DOG_SEARCH}?from=${
-            (page - 1) * 25
-          }&${newBreedsString}&sort=name:${sort}`
-        : `${DOG_SEARCH}?from=${(page - 1) * 25}&sort=name:${sort}`,
-      {
-        withCredentials: true,
-      }
-    );
-    return axios.post(`${POST_DOGS}`, dogIds.data.resultIds, {
-      withCredentials: true,
-    });
-  } catch (e) {
-    return Promise.reject(e);
-  }
-};
+import { getDogs } from "../api/dogs";
+import { IDog } from "../types/dogs";
+import DogCard from "../components/DogCard";
+import { FavoritesContext } from "../context/favoritesContext";
+import "./DogSearch.css";
+import "../Utils.css";
 
 const DogSearch: React.FC = () => {
+  const { favorites, setFavorites } = useContext(FavoritesContext);
+
   const [searchParams, setSearchParams] = useSearchParams();
 
   const [filteredBreeds, setFilteredBreeds] = useState<string[]>(
@@ -51,6 +26,28 @@ const DogSearch: React.FC = () => {
   );
 
   const navigate = useNavigate();
+
+  const logoutHandler = async () => {
+    try {
+      await axios.post(
+        LOGOUT_URL,
+        {},
+        {
+          withCredentials: true,
+        }
+      );
+      navigate("/");
+      toast.success("Log out successful!", {
+        duration: 2000,
+        position: "top-center",
+      });
+    } catch (e) {
+      toast.error("Oops something went wrong! Try again.", {
+        duration: 2000,
+        position: "top-center",
+      });
+    }
+  };
 
   const dogs = useQuery({
     queryKey: ["dogs", page, filteredBreeds, sort],
@@ -90,8 +87,32 @@ const DogSearch: React.FC = () => {
   }, [page, sort, filteredBreeds]);
 
   return (
-    <div>
-      <h1>Dog Match!</h1>
+    <div className="dogSearch">
+      <nav className="navbar">
+        <h1>Dog Match!</h1>
+        <button className="btn logoutBtn" onClick={logoutHandler}>
+          Log out
+        </button>
+      </nav>
+      {favorites.length < 1 ? null : (
+        <div className="favoriteDogs">
+          <h2>Favorites</h2>
+          <div className="dogCardItems">
+            {favorites.map((item) => (
+              <DogCard key={item.id} dogData={item} />
+            ))}
+          </div>
+          <button
+            className="btn matchMeButton"
+            onClick={() => {
+              navigate("/match");
+              setFavorites([]);
+            }}
+          >
+            Match me to a dog!
+          </button>
+        </div>
+      )}
       <div>
         <BreedsFilter
           filteredBreeds={filteredBreeds}
@@ -115,63 +136,34 @@ const DogSearch: React.FC = () => {
       {dogs.status === "loading" ? (
         <h1>Loading...</h1>
       ) : (
-        <div>
+        <div className="dogCardItems">
           {dogs.data &&
             dogs.data.data.map((item: IDog) => (
-              <div key={item.id}>
-                <img
-                  style={{ width: "200px", height: "200px" }}
-                  src={item.img}
-                />
-                <h3>{item.name}</h3>
-              </div>
+              <DogCard key={item.id} dogData={item} />
             ))}
         </div>
       )}
-      <div>
-        <button
-          onClick={async () => {
-            try {
-              await axios.post(
-                LOGOUT_URL,
-                {},
-                {
-                  withCredentials: true,
-                }
-              );
-              navigate("/");
-              toast.success("Log out successful!", {
-                duration: 2000,
-                position: "top-center",
-              });
-            } catch (e) {
-              toast.error("Oops something went wrong! Try again.", {
-                duration: 2000,
-                position: "top-center",
-              });
-            }
-          }}
-        >
-          Log out
-        </button>
-      </div>
-      <div>
+      <div className="pagination">
         <p>Current Page: {page}</p>
-        <button
-          disabled={page <= 1}
-          onClick={() => {
-            setPage((currPage) => (currPage -= 1));
-          }}
-        >
-          Prev
-        </button>
-        <button
-          onClick={() => {
-            setPage((currPage) => (currPage += 1));
-          }}
-        >
-          Next
-        </button>
+        <div className="paginationBtns">
+          <button
+            className="btn"
+            disabled={page <= 1}
+            onClick={() => {
+              setPage((currPage) => (currPage -= 1));
+            }}
+          >
+            Prev
+          </button>
+          <button
+            className="btn"
+            onClick={() => {
+              setPage((currPage) => (currPage += 1));
+            }}
+          >
+            Next
+          </button>
+        </div>
       </div>
     </div>
   );

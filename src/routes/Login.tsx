@@ -4,9 +4,11 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 
+import "./Login.css";
+
 const Login = () => {
-  const [email, setEmail] = useState("alesvoy@gmail.com");
-  const [name, setName] = useState("Alejandro");
+  const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
 
   const navigate = useNavigate();
 
@@ -29,7 +31,7 @@ const Login = () => {
 
       setTimeout(() => {
         navigate("/dogs");
-      }, 2000);
+      }, 1000);
     } catch (error) {
       toast.error("Oops something went wrong! Try again.", {
         duration: 3000,
@@ -39,31 +41,35 @@ const Login = () => {
   };
 
   return (
-    <div>
-      <form onSubmit={submitHandler}>
+    <div className="login">
+      <form className="loginForm" onSubmit={submitHandler}>
         <div>
-          <label htmlFor="name" className="mr-3">
+          <label htmlFor="name" className="formLabel">
             Name:
           </label>
           <input
             id="name"
             type="text"
             value={name}
+            placeholder="Jane Smith"
             onChange={(e) => setName(e.target.value)}
           />
         </div>
         <div>
-          <label htmlFor="email" className="mr-3">
+          <label htmlFor="email" className="formLabel">
             Email:
           </label>
           <input
             id="email"
             type="email"
             value={email}
+            placeholder="your@email.com"
             onChange={(e) => setEmail(e.target.value)}
           />
         </div>
-        <button type="submit">Log in</button>
+        <button className="btn" type="submit">
+          Log in
+        </button>
       </form>
     </div>
   );
